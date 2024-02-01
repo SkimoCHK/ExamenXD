@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="ExamenXD.Views.Vistaxd">
     <ContentPage.Content>
         <StackLayout>
@@ -11,35 +11,45 @@
                    Corporal (IMC) y tu Frecuencia Cardaica Normal(FCN)"/>
             <Grid >
                 <Label Margin="20,20,0,0" Grid.Row="0" Grid.Column="0" Text="Opciones" FontSize="25" TextColor="Black" />
-                <RadioButton x:Name="IMC" GroupName="Operacion"  Margin="90,0,0,50" Grid.Row="1" Grid.Column="0" Content="IMC" />
-                <RadioButton x:Name="FCN" GroupName="Operacion"  Margin="0,0,0,50" Grid.Row="1" Grid.Column="1" Content="FCN"/>
+                <RadioButton IsChecked="{Binding CalcularIMC}" x:Name="IMC" GroupName="Operacion"  Margin="90,0,0,50" Grid.Row="1" Grid.Column="0" Content="IMC" />
+                <RadioButton IsChecked="{Binding CalcularFCN}" x:Name="FCN" GroupName="Operacion"  Margin="0,0,0,50" Grid.Row="1" Grid.Column="1" Content="FCN"/>
                 <Label Margin="20,20,0,0" Grid.Row="2" Grid.ColumnSpan="2" Text="Proporcionar datos" FontSize="25" TextColor="Black" />
-                <Entry IsVisible="False" TextColor="Black" Margin="80,0,0,0" Grid.Row="3" Grid.Column="0" Placeholder="Peso" PlaceholderColor="Gray" >
+                <Entry Text="{Binding Peso}" IsVisible="False" TextColor="Black" Margin="80,0,0,0" Grid.Row="3" Grid.Column="0" Placeholder="Peso" PlaceholderColor="Gray" >
                     <Entry.Triggers>
                         <DataTrigger TargetType="Entry" Binding="{Binding Source={x:Reference IMC}, Path=IsChecked}" Value="True">
                             <Setter  Property="IsVisible" Value="True"/>
                         </DataTrigger>
                     </Entry.Triggers>
                 </Entry>
-                <Entry IsVisible="False" TextColor="Black" Margin="0,0,80,0" Grid.Row="3" Grid.Column="1" Placeholder="Altura" PlaceholderColor="Gray" >
+                <Entry IsVisible="False" Text="{Binding Altura}" TextColor="Black" Margin="0,0,80,0" Grid.Row="3" Grid.Column="1" Placeholder="Altura" PlaceholderColor="Gray" >
                     <Entry.Triggers>
                         <DataTrigger TargetType="Entry" Binding="{Binding Source={x:Reference IMC}, Path=IsChecked}" Value="True">
                             <Setter  Property="IsVisible" Value="True"/>
                         </DataTrigger>
                     </Entry.Triggers>
                 </Entry>
-                <Entry IsVisible="False" TextColor="Black" Margin="0,0,0,0" Grid.Row="3" Grid.ColumnSpan="2" Placeholder="Latidos por minuto" PlaceholderColor="Gray" >
+                <Label Grid.Row="3" Grid.ColumnSpan="2" Margin="20,-15,0,0"  FontSize="15" TextColor="Black" Text="Ingrese las pulsaciones que tiene en 15 segundos">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference FCN}, Path=IsChecked}" Value="True">
+                            <Setter  Property="IsVisible" Value="True"/>
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+                <Entry IsVisible="False" Text="{Binding Corazon}" TextColor="Black" Margin="0,0,0,0" Grid.Row="3" Grid.ColumnSpan="2" Placeholder="Latidos por 15 segundos" PlaceholderColor="Gray" >
                     <Entry.Triggers>
                         <DataTrigger TargetType="Entry" Binding="{Binding Source={x:Reference FCN}, Path=IsChecked}" Value="True">
                             <Setter  Property="IsVisible" Value="True"/>
                         </DataTrigger>
                     </Entry.Triggers>
                 </Entry>
-                
-                <Button BackgroundColor="Wheat" Margin="110,15" CornerRadius="100" Grid.Row="4" Grid.ColumnSpan="2" Text="CALCULAR" />
-                <Label FontAttributes="Bold" Margin="10,0,0,0" FontSize="20" Grid.Row="5" Grid.ColumnSpan="2" TextColor="Black" Text="Su IMC es 30, usted tiene obesidad"/>
-                <Image IsVisible="False" Grid.Row="6" Grid.ColumnSpan="2" WidthRequest="70" HeightRequest="50"  Source="https://i.ibb.co/mNyDR4Z/comprobar.png" />
-                <Image IsVisible="False" Grid.Row="6" Grid.ColumnSpan="2" WidthRequest="50" HeightRequest="50"  Source="https://i.ibb.co/JBGxzQh/crisis.png" />
+
+                <Button Command="{Binding CalcularCommand}" BackgroundColor="Wheat" Margin="110,15" CornerRadius="100" Grid.Row="4" Grid.ColumnSpan="2" Text="CALCULAR" />
+
+                <Label FontAttributes="Bold" Margin="10,0,0,0" FontSize="20" Grid.Row="5" Grid.Column="0" TextColor="Black" Text="Resultado:"/>
+                <Label FontAttributes="Bold" Margin="-100,0,0,0" FontSize="20" Grid.Row="5" Grid.Column="1" TextColor="Black" Text="{Binding ResultadoIMC}"/>
+                <Label FontAttributes="Bold" Margin="-115,0,0,0" FontSize="20" Grid.Row="5" Grid.Column="1" TextColor="Black" Text="{Binding ResultadoFCN}"/>
+                <Image IsVisible="{Binding Imagen1}" Grid.Row="6" Grid.ColumnSpan="2" WidthRequest="70" HeightRequest="50"  Source="https://i.ibb.co/mNyDR4Z/comprobar.png" />
+                <Image IsVisible="{Binding Imagen2}" Grid.Row="6" Grid.ColumnSpan="2" WidthRequest="50" HeightRequest="50"  Source="https://i.ibb.co/JBGxzQh/crisis.png" />
 
             </Grid>
         </StackLayout>
